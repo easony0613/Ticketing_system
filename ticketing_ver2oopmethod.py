@@ -47,9 +47,9 @@ adult_amount = IntVar()
 student_amount = IntVar()
 total_detail = StringVar()
 
-adult_amount.set("")
-child_amount.set("")
-student_amount.set("")
+adult_amount.set("0")
+child_amount.set("0")
+student_amount.set("0")
 total_detail.set("Total: $0")
 total_price = 0 # i added total price
 
