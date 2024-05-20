@@ -12,6 +12,7 @@ from tkinter import ttk
 ADULT = 15
 CHILD = 5
 STUDENT = 10
+MAXIMUM_TICKET = 100
 
 class Ticket():
     def __init__(self, price, quantity):
@@ -32,13 +33,15 @@ def collect_ticket():
     return order_list
 
 def calculate_price():
+    global ticket_amount
     total_price = 0
     for order in (collect_ticket()):
         total_price += order.calculate_sub_total()
     total_detail.set(f"Total: ${total_price}")
+
         
 
-
+ticket_amount = 100
 root = Tk()
 root.title("Ticketing system")
 root.geometry("600x200")
@@ -46,12 +49,16 @@ child_amount = IntVar()
 adult_amount = IntVar()
 student_amount = IntVar()
 total_detail = StringVar()
+ticket_detail = StringVar()
+message = StringVar()
+
 
 adult_amount.set("0")
 child_amount.set("0")
 student_amount.set("0")
 total_detail.set("Total: $0")
-total_price = 0 # i added total price
+ticket_detail.set(f"Ticket available: {ticket_amount}")
+message.set("")
 
 root.resizable(0,0)
 
@@ -66,6 +73,12 @@ label3.grid(row=2, column=0, columnspan=2, padx=10, sticky="W")
 
 label4 = ttk.Label(root, textvariable=total_detail, font=("Arial 20 bold")) # i changed the total price label from text to a text variable so it can be easily updated using a function
 label4.grid(row=3, column=0, padx=10, sticky="W")
+
+label5 = ttk.Label(root, textvariable=ticket_detail, font=("Arial 20 bold"))
+label5.grid(row=4, column=0, padx=10, sticky="W")
+
+label6 = ttk.Label(root, textvariable=message, wraplength=150)
+label6.grid(row=0, column=3)
 
 entry1 = Entry(root, textvariable=adult_amount)
 entry1.grid(row=0, column=2)
