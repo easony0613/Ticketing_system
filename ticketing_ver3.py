@@ -34,24 +34,32 @@ def collect_ticket():
 
 def calculate_price():
     global ticket_amount
-    ticket_ordered = adult_amount.get() + child_amount.get() + student_amount.get()
-    total_price = 0
-    for order in (collect_ticket()):
-        if order.quantity > 100:
-            message.set(f"You cannot order more than 100 tickets")
-            total_detail.set(f"Total: $0")
-            break
 
-        elif ticket_ordered > MAXIMUM_TICKET:
-            message.set(f"You cannot order more than 100 tickets")
-            total_detail.set(f"Total: $0")
-            break
+    if adult_amount.get().isdigit() == False or child_amount.get().isdigit() == False or student_amount.get().isdigit()==False:
+        message.set("Please enter a whole number")
 
-        else: 
-            total_price += order.calculate_sub_total()
-            message.set("")
+    elif int(adult_amount.get()) < 0 or int(child_amount.get()) < 0 or int(student_amount.get()) <0:
+        message.set("Ticket error, please enter correct number of ticket")
 
-    total_detail.set(f"Total: ${total_price}")
+    else: 
+        ticket_ordered = int(adult_amount.get()) + int(child_amount.get()) + int(student_amount.get())
+        total_price = 0
+        for order in (collect_ticket()):
+            if order.quantity > 100:
+                message.set(f"You cannot order more than 100 tickets")
+                total_detail.set(f"Total: $0")
+                break
+
+            elif ticket_ordered > MAXIMUM_TICKET:
+                message.set(f"You cannot order more than 100 tickets")
+                total_detail.set(f"Total: $0")
+                break
+
+            else: 
+                total_price += order.calculate_sub_total()
+                message.set("")
+
+        total_detail.set(f"Total: ${total_price}")
 
         
 
@@ -59,9 +67,9 @@ ticket_amount = 100
 root = Tk()
 root.title("Ticketing system")
 root.geometry("600x200")
-child_amount = IntVar()
-adult_amount = IntVar()
-student_amount = IntVar()
+child_amount = StringVar()
+adult_amount = StringVar()
+student_amount = StringVar()
 total_detail = StringVar()
 ticket_detail = StringVar()
 message = StringVar()
